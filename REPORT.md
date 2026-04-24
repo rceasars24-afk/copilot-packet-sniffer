@@ -44,5 +44,9 @@ The ethical implications of using a packet sniffer were carefully considered. Di
 - Balancing network security needs with privacy rights.
 - Transparency about how captured data is used and stored.
 
+- ### 7. What Copilot Got Wrong (or Needed Modification)
+While GitHub Copilot was helpful in accelerating development, there was a small redundancy in its recommendation.
+- Unnecessary or Unused Imports (HTTP, HTTPRequest) that weren't used in the final implementation
+
 ### Conclusion
-This report outlines the substantial efforts made to ensure the packet sniffer project is compliant with ethical standards while maintaining robust functionality. Future enhancements will continue to address the evolving landscape of network security and privacy.
+This report outlines the substantial efforts made to ensure the packet sniffer project is compliant with ethical standards while maintaining robust functionality. Future enhancements can continue to address the evolving landscape of network security and privacy.
