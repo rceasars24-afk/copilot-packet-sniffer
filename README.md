@@ -25,7 +25,7 @@ Setup Instructions
 
        pip install -r requirements.txt
 
-3. Run with Elevated Privileges
+3. Run with Elevated Privileges (Live Capture Only)
 
        Packet sniffing requires admin/root permissions.
 
@@ -42,7 +42,7 @@ Windows (PowerShell as Administrator):
 Run Examples
 =
 
-Default Run (Loopback Capture)
+Live Capture (Loopback Mode)
 
     sudo python3 sniffer.py
 
@@ -55,6 +55,19 @@ What the Script Does
     No filter (captures all local traffic)
 
     Prints decoded + redacted packet data
+
+Safe Mode (Read from .pcap)
+
+       python3 sniffer.py test_traffic.pcap
+
+What this does:
+
+       Reads packets from a file instead of live traffic
+
+       Does not require admin privileges
+
+       Safely demonstrates decoding and redaction
+
 
 Example Output
 =
@@ -72,13 +85,19 @@ Example Output
 Generating Test Traffic
 =
 
-To see meaningful output, generate local traffic:
+Live Traffic
 
     curl http://localhost
 
-or trigger DNS:
-
     nslookup example.com
+
+Generate a .pcap File
+
+       python3 generate_pcap.py
+
+This creates
+
+       test_traffic.pcap
 
 ---
 
@@ -92,6 +111,8 @@ Packet Capture
     Packet count: 25
   
     Uses Scapy sniff() function
+
+    Optional .pcap file input mode
 
 Protocol Decoding
   
@@ -175,6 +196,8 @@ Safeguards Implemented:
     Packet count limit (25)
   
     Sensitive data redaction
+
+    .pcap safe mode
   
     Clear ethical warning in program output
 
@@ -212,6 +235,8 @@ Project Requirements Coverage
 =
 
     Packet capture (loopback)
+
+    .pcap file support (safe mode)
   
     Protocol decoding (IP, TCP, UDP, DNS)
   
@@ -223,15 +248,6 @@ Project Requirements Coverage
   
     Reproducible setup
 
-Future Improvements
-
-Add .pcap file reading mode
-
-CLI arguments for interface/filter selection
-
-Structured logging (JSON output)
-
-Unit test suite
 
 Author
 
