@@ -7,7 +7,6 @@ Captures and redacts network traffic for authorized lab use only.
 import re
 import sys
 from scapy.all import sniff, IP, TCP, UDP, DNS, DNSQR, Raw
-from scapy.layers.http import HTTP, HTTPRequest
 
 # ===== REDACTION FUNCTIONS =====
 def redact_ip(ip_address):
