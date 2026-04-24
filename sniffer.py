@@ -116,22 +116,25 @@ def main():
     bpf_filter = ""
 
     print(f"\nCapturing {packet_count} packets on interface: {iface}")
-    
-    sniff(
-        iface=iface,
-        prn=packet_callback,
-        count=packet_count,
-        filter=bpf_filter,
-        store=False
-    )
+
+    try:
+        sniff(
+            iface=iface,
+            prn=packet_callback,
+            count=packet_count,
+            filter=bpf_filter,
+            store=False
+        )
+
     except PermissionError:
         print("❌ ERROR: This script needs elevated privileges (sudo)")
         print("Run with: sudo python3 sniffer.py")
         sys.exit(1)
+
     except Exception as e:
         print(f"❌ ERROR: {e}")
         sys.exit(1)
-    
+
     print("\n" + "="*60)
     print("Packet capture complete!")
     print("="*60)
