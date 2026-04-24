@@ -7,6 +7,17 @@ Captures and redacts network traffic for authorized lab use only.
 import re
 import sys
 from scapy.all import sniff, IP, TCP, UDP, DNS, DNSQR, Raw
+from scapy.all import rdpcap
+
+# ===== PCAP FUNCTION =====
+def read_pcap(file_path):
+    """Read packets from a pcap file."""
+    print(f"\nReading packets from {file_path}...\n")
+    
+    packets = rdpcap(file_path)
+    
+    for packet in packets:
+        packet_callback(packet)
 
 # ===== REDACTION FUNCTIONS =====
 def redact_ip(ip_address):
@@ -88,30 +99,31 @@ def packet_callback(packet):
 
 # ===== MAIN FUNCTION =====
 def main():
-    """Main function to start packet sniffing."""
     print("="*60)
     print("Copilot-Assisted Packet Sniffer")
     print("="*60)
-    print("⚠️  ETHICAL USE ONLY: Capture traffic on your own machine only!")
+    print("⚠️  ETHICAL USE ONLY")
     print("="*60)
-    
-    # Configuration
-    iface = "lo"  # Loopback interface (safest for testing)
+
+    # If user provides a pcap file → safe mode
+    if len(sys.argv) > 1:
+        read_pcap(sys.argv[1])
+        return
+
+    # Default: live capture (loopback only)
+    iface = "lo"
     packet_count = 25
-    bpf_filter = ""  # Empty = capture all
-    
+    bpf_filter = ""
+
     print(f"\nCapturing {packet_count} packets on interface: {iface}")
-    print(f"Filter: {bpf_filter if bpf_filter else 'None (all packets)'}")
-    print("Waiting for packets...\n")
     
-    try:
-        sniff(
-            iface=iface,
-            prn=packet_callback,
-            count=packet_count,
-            filter=bpf_filter,
-            store=False
-        )
+    sniff(
+        iface=iface,
+        prn=packet_callback,
+        count=packet_count,
+        filter=bpf_filter,
+        store=False
+    )
     except PermissionError:
         print("❌ ERROR: This script needs elevated privileges (sudo)")
         print("Run with: sudo python3 sniffer.py")
